@@ -1,13 +1,14 @@
 <?php
+require '.settings.php';
 require 'class.phpmailer.php';
 require 'class.smtp.php';
 
 
 	// FIRST TIME SETUP
 
-	// STEP 1: Create a .env.php file with an email account's username and password for sending messages and an array of accounts you with to be notified with
+	// STEP 1: Create a .settings.php file with an email account's username and password for sending messages and an array of accounts you with to be notified with
 	// Example: 
-	// return array(
+	// $settings = array(
 	// 	'EMAIL' => 'myemail@domain.com',
 	// 	'PASSWORD' => 'emailpassword',
 	// 	'ACCOUNTS' => array(
@@ -21,7 +22,7 @@ require 'class.smtp.php';
 	// 					      */5 * * * * /PATHTOPHP/php /PATHTOTHISSCRIPT/server_status_checker.php
 	
 
-$domains = [''];
+$domains = ['']; // Fill with sites to test
 
 $body = '';
 
@@ -59,14 +60,14 @@ if($body) {
 	$mail->Encoding = '7bit';       // SMS uses 7-bit encoding
 	 
 	// Authentication
-	$mail->Username   = $_ENV['EMAIL']; // Login
-	$mail->Password   = $_ENV['PASSWORD']; // Password
+	$mail->Username   = $settings['EMAIL']; // Login
+	$mail->Password   = $settings['PASSWORD']; // Password
 	 
 	// Compose
 	$mail->Body = $body;       // Body of our message
 	 
 	// Send To
-	foreach($_ENV['ACCOUNTS'] as $account) {
+	foreach($settings['ACCOUNTS'] as $account) {
 		$mail->AddAddress($account); // Where to send it
 	}
 	$mail->send();      // Send!
