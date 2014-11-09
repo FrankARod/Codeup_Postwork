@@ -1,28 +1,9 @@
 <?php
-require '.settings.php';
+require '.server_status_checker_settings.php';
 require 'class.phpmailer.php';
 require 'class.smtp.php';
 
-
-	// FIRST TIME SETUP
-
-	// STEP 1: Create a .settings.php file with an email account's username and password for sending messages and an array of accounts you with to be notified with
-	// Example: 
-	// $settings = array(
-	// 	'EMAIL' => 'myemail@domain.com',
-	// 	'PASSWORD' => 'emailpassword',
-	// 	'ACCOUNTS' => array(
-	// 		'myemail@domain.com',
-	// 		'xxxxxxxxxx@phoneprovider.com'
-	// 	)
-	// );
-
-	// STEP 2: Create a cron job.
-	// Example: (in terminal) cronjob -e 
-	// 					      */5 * * * * /PATHTOPHP/php /PATHTOTHISSCRIPT/server_status_checker.php
-	
-
-$domains = ['']; // Fill with sites to test
+$domains = ['budgetbot.info', 'frankarod.com']; // Fill with sites to test
 
 $body = '';
 
@@ -64,6 +45,7 @@ if($body) {
 	$mail->Password   = $settings['PASSWORD']; // Password
 	 
 	// Compose
+	$mail->FromName = "Server Status Checker";
 	$mail->Body = $body;       // Body of our message
 	 
 	// Send To
